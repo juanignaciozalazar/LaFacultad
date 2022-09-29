@@ -1,14 +1,18 @@
 package com.LaFacultad;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class Materia {
     private String nombre;
-    private String titular;
-    private String coleccionEstudiantes;
+    private Profesor titular;
+    private Set<Estudiante> coleccionEstudiantes;
 
-    public Materia(String nombre, String titular, String coleccionEstudiantes) {
+    public Materia(String nombre, Profesor titular) {
         this.nombre = nombre;
         this.titular = titular;
-        this.coleccionEstudiantes = coleccionEstudiantes;
+        this.coleccionEstudiantes = new HashSet<>();
     }
 
     @java.lang.Override
@@ -28,63 +32,37 @@ public class Materia {
         this.nombre = nombre;
     }
 
-    public String getTitular() {
+    public Profesor getTitular() {
         return titular;
     }
 
-    public void setTitular(String titular) {
+    public void setTitular(Profesor titular) {
         this.titular = titular;
     }
 
-    public String getColeccionEstudiantes() {
+    public Set<Estudiante> getColeccionEstudiantes() {
         return coleccionEstudiantes;
     }
 
-    public void setColeccionEstudiantes(String coleccionEstudiantes) {
+    public void setColeccionEstudiantes(Set<Estudiante> coleccionEstudiantes) {
         this.coleccionEstudiantes = coleccionEstudiantes;
     }
 
-    public void agregarEstudiante(String coleccionEstudiantes){
-        ArrayList<Estudiante> List = new ArrayList<Estudiante>();
-        do {
-            List = reader.next();
-        if (List.equals("ADD") {
-            list.add("Estudiante");
-        }
-
-        } while (!List.equals("End"));
+    public void agregarEstudiante(Estudiante estudiante){
+        coleccionEstudiantes.add(estudiante);
     }
-    public void eliminarEstudiantes(){
-        ArrayList<Estudiante> List = new ArrayList<Estudiante>();
-        do {
-            List = reader.next();
-            if (!List.isEmpty()){
-                List.remove(List.size()-1);
-            }else {
-                System.out.println("La lista de Estudiantes esta vacia. No se puede eliminar mas estudiantes");
-                System.out.println("Hay " + List.size() + " Estudiantes en la lista");
+    public void eliminarEstudiantes(String nombre){
+        Iterator<Estudiante> i = coleccionEstudiantes.iterator();
+        while(i.hasNext()) {
+            Estudiante auxEstudiante= i.next();
+            if (auxEstudiante.getNombre().equals(nombre)) {
+                coleccionEstudiantes.remove(auxEstudiante);
+                break;
             }
         }
+        coleccionEstudiantes.remove(nombre);
     }
-    public void modificarTitular(){
-        ArrayList<Profesor> List = new ArrayList<Profesor>();
-        do {
-            List = reader.next();
-
-            if (List.equals("ADD")) {
-                List.add("Profesor");
-                System.out.println("Agregue un nuevo profesor a la materia: " );
-            }
-            else if {
-                (List.equals("DEL"))
-            }
-                if (!List.isEmpty()) {
-                    List.remove(List.size() - 1);
-                }
-                else
-
-            System.out.println("Elimine el profesor de la materia");
-        } while(!sTexto.equals("END"));
-
+    public void modificarTitular(Profesor profesor){
+        this.titular = profesor;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Set;
 
         //Atributos
         private String nombre;
-        private Set<Materia> ColeccionDeMaterias = new HashSet<Materia>();//Coleccion
+        private Set<Materia> ColeccionDeMaterias;
 
         //Constructor
 
@@ -17,6 +17,10 @@ import java.util.Set;
             this.nombre = nombre;
         }
 
+        public Carrera(String nombre) {
+            this.nombre = nombre;
+            this.ColeccionDeMaterias = new HashSet<>();
+        }
 
         //setters getters
 
@@ -34,22 +38,22 @@ import java.util.Set;
             ColeccionDeMaterias.add(materias);
         }
 
-        public void EliminarMateria (String nombreMateria){
+        public void EliminarMateria (String nombre){
             Iterator<Materia> i = ColeccionDeMaterias.iterator();
             while(i.hasNext()) {
                 Materia auxMateria = i.next();
-                if (auxMateria.getNombre().equals(nombreMateria)) {
+                if (auxMateria.getNombre().equals(nombre)) {
                     ColeccionDeMaterias.remove(auxMateria);
                     break;
                 }
             }
-            ColeccionDeMaterias.remove(nombreMateria);
+            ColeccionDeMaterias.remove(nombre);
         }
 
 
         public void encontrarMateria (String nombre){
             for (Materia materia : ColeccionDeMaterias) {
-                if (materia.getNombre.equals(nombre)) {
+                if (materia.getNombre().equals(nombre)) {
                     System.out.println(materia.toString());
                     return;
                 }
