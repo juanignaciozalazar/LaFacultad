@@ -1,12 +1,14 @@
+package com.LaFacultad;
+
 
 import java.util.HashSet;
-import java.util.Scanner;
+import java.util.Iterator;
 import java.util.Set;
     public class Carrera extends Facultad{
 
         //Atributos
-        String nombre;
-        Set<Materia> ColeccionDeMaterias = new HashSet<Materia>();//Coleccion
+        private String nombre;
+        private Set<Materia> ColeccionDeMaterias = new HashSet<Materia>();//Coleccion
 
         //Constructor
 
@@ -28,28 +30,30 @@ import java.util.Set;
 
         //Metodos
 
-        public void AgregarMateria (Materia materias) {
-            Scanner sc = new Scanner(System.in);
-            Materia aux;
-            System.out.println("Nombre de materia a agregar: ");
-            string nombreMateria = sc.next();
-
-            aux = new Materia();
-            aux.setNombre(nombreMateria);
-
-            ColeccionDeMaterias.add(aux);
+        public void agregarMateria (Materia materias) {
+            ColeccionDeMaterias.add(materias);
         }
 
-        public void EliminarMateria (String nombreMateria ){
-
+        public void EliminarMateria (String nombreMateria){
+            Iterator<Materia> i = ColeccionDeMaterias.iterator();
+            while(i.hasNext()) {
+                Materia auxMateria = i.next();
+                if (auxMateria.getNombre().equals(nombreMateria)) {
+                    ColeccionDeMaterias.remove(auxMateria);
+                    break;
+                }
+            }
             ColeccionDeMaterias.remove(nombreMateria);
         }
 
 
         public void encontrarMateria (String nombre){
             for (Materia materia : ColeccionDeMaterias) {
-                System.out.println(materia.toString());
+                if (materia.getNombre.equals(nombre)) {
+                    System.out.println(materia.toString());
+                    return;
+                }
             }
+            System.out.println("Materia no encontrada =(");
         }
     }
-}
