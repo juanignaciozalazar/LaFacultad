@@ -1,63 +1,90 @@
 package com.LaFacultad;
 
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-    public class Carrera extends Facultad{
+import java.util.*;
 
-        //Atributos
-        private String nombre;
-        private Set<Materia> ColeccionDeMaterias;
+public class Carrera extends Facultad implements Informacion {
 
-        //Constructor
+    //Atributos
+    private List<Materia> coleccionMaterias = new ArrayList<>();
 
-        public Carrera(Set<Materia> coleccionDeMaterias, String nombre) {
-            this.ColeccionDeMaterias = coleccionDeMaterias;
-            this.nombre = nombre;
-        }
+    //Constructores
+    public Carrera(String nombre, List<Materia> coleccionDeMaterias) {
+        super(nombre);
+        this.coleccionMaterias = coleccionDeMaterias;
+    }
 
-        public Carrera(String nombre) {
-            this.nombre = nombre;
-            this.ColeccionDeMaterias = new HashSet<>();
-        }
+    public Carrera(String nombre) {
+        super(nombre);
+    }
 
-        //setters getters
+    public Carrera() {}
 
-        public String getNombre() {
-            return nombre;
-        }
+    public List<Materia> getColeccionMaterias() {
+        return coleccionMaterias;
+    }
 
-        public void setNombre(String nombre) {
-            this.nombre = nombre;
-        }
+    //Metodos
 
-        //Metodos
+    public void agregarMateria (Materia materias) {
+        coleccionMaterias.add(materias);
+    }
 
-        public void agregarMateria (Materia materias) {
-            ColeccionDeMaterias.add(materias);
-        }
-
-        public void EliminarMateria (String nombre){
-            Iterator<Materia> i = ColeccionDeMaterias.iterator();
-            while(i.hasNext()) {
-                Materia auxMateria = i.next();
-                if (auxMateria.getNombre().equals(nombre)) {
-                    ColeccionDeMaterias.remove(auxMateria);
-                    break;
-                }
+    public void eliminarMateria (String nombre){
+        for (Materia materia: coleccionMaterias) {
+            if (materia.getNombre().equals(nombre)) {
+                coleccionMaterias.remove(materia);
+                System.out.println("Materia eliminada con exito");
+                return;
             }
-            ColeccionDeMaterias.remove(nombre);
+        }
+        System.out.println("Materia no encontrada");
+    }
+
+
+    public void encontrarMateria (String nombre){
+        Scanner s = new Scanner(System.in);
+        Materia materiaEliminar = null;
+        for (Materia materia : coleccionMaterias) {
+            if (materia.getNombre().equals(nombre)) {
+                System.out.println("Encontrado: " + materia.toString());
+                System.out.println("Desea eliminar esta materia? S/N");
+                String input = s.nextLine();
+                if (input.equalsIgnoreCase("S")){
+                    materiaEliminar = materia;
+                } else return;
+            }
         }
 
-
-        public void encontrarMateria (String nombre){
-            for (Materia materia : ColeccionDeMaterias) {
-                if (materia.getNombre().equals(nombre)) {
-                    System.out.println(materia.toString());
-                    return;
-                }
-            }
+        if (materiaEliminar != null) {
+            eliminarMateria(materiaEliminar.getNombre());
+        } else {
             System.out.println("Materia no encontrada =(");
         }
     }
+
+    @Override
+    public String listarContenido() {
+        coleccionMaterias.sort(Comparator.comparing(Carrera::getNombre));
+        String out = "Carrera['" + getNombre() + "', coleccionMaterias = {";
+
+        for (Materia materia : coleccionMaterias) {
+            out = out + materia.getNombre() + ", ";
+        }
+        out = out + "}]";
+        return out;
+    }
+
+    @Override
+    public int verCantidad() {
+        return coleccionMaterias.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Carrera{" +
+                "nombre='" + getNombre() + "'" +
+                "coleccionMaterias=" + coleccionMaterias +
+                '}';
+    }
+}

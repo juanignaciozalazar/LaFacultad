@@ -1,21 +1,19 @@
 package com.LaFacultad;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
-public class Materia {
+public class Materia extends Carrera implements Informacion {
     private String nombre;
     private Profesor titular;
-    private Set<Estudiante> coleccionEstudiantes;
+    private List<Estudiante> coleccionEstudiantes;
 
     public Materia(String nombre, Profesor titular) {
         this.nombre = nombre;
         this.titular = titular;
-        this.coleccionEstudiantes = new HashSet<>();
+        this.coleccionEstudiantes = new ArrayList<>();
     }
 
-    @java.lang.Override
+    @Override
     public java.lang.String toString() {
         return "Materia{" +
                 "nombre='" + nombre + '\'' +
@@ -40,21 +38,23 @@ public class Materia {
         this.titular = titular;
     }
 
-    public Set<Estudiante> getColeccionEstudiantes() {
+    public List<Estudiante> getColeccionEstudiantes() {
         return coleccionEstudiantes;
     }
 
-    public void setColeccionEstudiantes(Set<Estudiante> coleccionEstudiantes) {
+    public void setColeccionEstudiantes(List<Estudiante> coleccionEstudiantes) {
         this.coleccionEstudiantes = coleccionEstudiantes;
     }
 
     public void agregarEstudiante(Estudiante estudiante){
         coleccionEstudiantes.add(estudiante);
     }
-    public void eliminarEstudiantes(String nombre){
+
+    // AVISO: Este metodo elimina todos los estudiantes que tengan el nombre del parametro.
+    public void eliminarEstudiante(String nombre){
         Iterator<Estudiante> i = coleccionEstudiantes.iterator();
         while(i.hasNext()) {
-            Estudiante auxEstudiante= i.next();
+            Estudiante auxEstudiante = i.next();
             if (auxEstudiante.getNombre().equals(nombre)) {
                 coleccionEstudiantes.remove(auxEstudiante);
                 break;
@@ -62,7 +62,31 @@ public class Materia {
         }
         coleccionEstudiantes.remove(nombre);
     }
+
+    public void eliminarEstudiante(Estudiante estudiante) {
+        coleccionEstudiantes.remove(estudiante);
+    }
+
     public void modificarTitular(Profesor profesor){
         this.titular = profesor;
     }
+
+    public String listarContenido() {
+        coleccionEstudiantes.sort(Comparator.comparing(Estudiante::getNombre));
+        String out = "Materia['" + getNombre() + "', coleccionMaterias = {";
+        for (Estudiante estudiante: coleccionEstudiantes) {
+            out = out + estudiante.getNombre() + ", ";
+        }
+        out = out + "}]";
+        return out;
+    }
+
+    @Override
+    public int verCantidad() {
+        return coleccionEstudiantes.size();
+    }
+
+
+
+
 }
